@@ -64,7 +64,7 @@ namespace TopDownShooter
             {
                 if(Globals.GetDistance(pos, UNITS[i].pos) < UNITS[i].hitDist)
                 {
-                    UNITS[i].GetHit();
+                    UNITS[i].GetHit(1);
 
                     hit = true;
                 }

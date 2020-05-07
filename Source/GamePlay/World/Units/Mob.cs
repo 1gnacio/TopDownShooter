@@ -29,6 +29,13 @@ namespace TopDownShooter.Source.GamePlay.World
             pos += Globals.RadialMovement(HERO.pos, pos, speed);
 
             rot = Globals.RotateTowards(pos, HERO.pos);
+
+
+            if (Globals.GetDistance(pos, HERO.pos) < 15)
+            {
+                HERO.GetHit(1);
+                dead = true;
+            }
         }
 
         public override void Draw(Vector2 OFFSET)

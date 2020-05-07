@@ -12,6 +12,6 @@ namespace TopDownShooter
     public class GameGlobals
     {
 
-        public static PassObject PassProjectile, PassMob;
+        public static PassObject PassProjectile, PassMob, CheckScroll;
     }
 }
