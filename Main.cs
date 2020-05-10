@@ -10,9 +10,10 @@ namespace TopDownShooter
     public class Main : Game
     {
         GraphicsDeviceManager graphics;
-        World world;
 
         Basic2d cursor;
+
+        GamePlay gamePlay;
 
         public Main()
         {
@@ -59,7 +60,7 @@ namespace TopDownShooter
             Globals.mouse = new McMouseControl();
             cursor = new Basic2d("2d\\Misc\\CursorArrow", new Vector2(0, 0), new Vector2(28, 28));
 
-            world = new World();
+            gamePlay = new GamePlay();
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace TopDownShooter
             Globals.keyboard.Update();
             Globals.mouse.Update();
 
-            world.Update();
+            gamePlay.Update();
 
             Globals.keyboard.UpdateOld();
             Globals.mouse.UpdateOld();
@@ -109,7 +110,7 @@ namespace TopDownShooter
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
 
-            world.Draw(Vector2.Zero);
+            gamePlay.Draw();
 
             cursor.Draw(new Vector2(Globals.mouse.newMousePos.X, Globals.mouse.newMousePos.Y), new Vector2(0, 0), Color.White);
 

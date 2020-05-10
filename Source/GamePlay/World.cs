@@ -27,8 +27,11 @@ namespace TopDownShooter
 
         public List<SpawnPoint> spawnPoints = new List<SpawnPoint>();
 
-        public World()
+        PassObject resetWorld;
+
+        public World(PassObject RESETWORLD)
         {
+            resetWorld = RESETWORLD;
 
             numKilled = 0;
 
@@ -58,35 +61,46 @@ namespace TopDownShooter
 
         public virtual void Update()
         {
-            hero.Update(offset);
 
-            for (int i = 0; i < spawnPoints.Count; i++)
+            if(!hero.dead)
             {
-                spawnPoints[i].Update(offset);
-            }
+                hero.Update(offset);
 
-            for (int i = 0;  i<projectiles.Count; i++)
-            {
-                projectiles[i].Update(offset, mobs.ToList<Unit>());
-
-                if (projectiles[i].done)
+                for (int i = 0; i < spawnPoints.Count; i++)
                 {
-                    projectiles.RemoveAt(i);
-                    i--;
+                    spawnPoints[i].Update(offset);
+                }
+
+                for (int i = 0; i < projectiles.Count; i++)
+                {
+                    projectiles[i].Update(offset, mobs.ToList<Unit>());
+
+                    if (projectiles[i].done)
+                    {
+                        projectiles.RemoveAt(i);
+                        i--;
+                    }
+                }
+
+                for (int i = 0; i < mobs.Count; i++)
+                {
+                    mobs[i].Update(offset, hero);
+
+                    if (mobs[i].dead)
+                    {
+                        numKilled++;
+                        mobs.RemoveAt(i);
+                        i--;
+                    }
+                }
+            } else
+            {
+                if (Globals.keyboard.GetPress("Enter"))
+                {
+                    resetWorld(null);
                 }
             }
-
-            for (int i = 0; i < mobs.Count; i++)
-            {
-                mobs[i].Update(offset, hero);
-
-                if (mobs[i].dead)
-                {
-                    numKilled++;
-                    mobs.RemoveAt(i);
-                    i--;
-                }
-            }
+            
 
             ui.Update(this);
         }
@@ -146,6 +160,9 @@ namespace TopDownShooter
             }
 
             ui.Draw(this);
+
+
+            
 
         }
 
